@@ -1,0 +1,10 @@
+<h5 class="card-title"><strong>company:</strong>{{$comp->company_name}}</h5>
+                    <p class="card-text">
+                        <strong>Position:</strong> {{$comp->position}}<br>
+                        <strong>Job Title:</strong> {{$comp->job_type}}<br>
+                        <strong>Description:</strong> {{$comp->description}}<br>
+                        <strong>Start Date:</strong> {{$comp->start_date}}<br>
+                        <strong>End Date:</strong> {{$comp->end_date}}<br>
+                        <strong>Location:</strong> {{$comp->location}}<br>
+                        <strong>Application Deadline:</strong> {{$comp->application_deadline}}
+                    </p>
