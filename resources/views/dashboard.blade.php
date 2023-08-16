@@ -19,16 +19,16 @@
   box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .img-card {
-  width: 50%;
-  height:50px;
+  width: 10%;
+  height:10px;
   border-top-left-radius:2px;
   border-top-right-radius:2px;
   display:block;
   overflow: hidden;
 }
 .img-card img{
-  width: 10%;
-  height: 10px;
+  width: 5%;
+  height: 5px;
   object-fit:cover; 
   transition: all .25s ease;
 }
@@ -39,6 +39,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+    <!-- @livewireStyles -->
+
+    <!-- Scripts -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <div class="container mt-4">
         @if(Session('success'))
@@ -53,7 +58,8 @@
         @endif
    
     
-
+    @livewire('livewire-ui-modal')
+    @livewireScripts
     <div class="row">
         @foreach($company as $comp)
         <div class="col-md-4 mb-4">
@@ -95,7 +101,7 @@
                                 <p class="mb-0">Share</p>
                             </a>
                         </div>
-                        <button type="button" class="btn btn-success"><i class="fa fa-check"></i> Apply</button>
+                        <button type="button" onclick="Livewire.emit('openModal', 'reviewmodal')" class="btn btn-success"><i class="fa fa-check"></i> Apply</button>
                         <button type="button" class="btn btn-info ml-2"><i class="fa fa-check"></i> Leave Review</button>
                     </div>
                 </div>
