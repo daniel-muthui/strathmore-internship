@@ -91,10 +91,6 @@
                                 <p class="mb-0">Like</p>
                             </a>
                             <a href="#!" class="d-flex align-items-center me-3">
-                                <i class="far fa-comment-dots me-2"></i>
-                                <p class="mb-0">Comment</p>
-                            </a>
-                            <a href="#!" class="d-flex align-items-center me-3">
                                 <i class="fas fa-share me-2"></i>
                                 <p class="mb-0">Share</p>
                             </a>
