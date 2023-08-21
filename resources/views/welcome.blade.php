@@ -70,9 +70,9 @@
                                 in <i class="fa fa-sign-in-alt"></i> </button>
                         </div>
                         
-                        @if (Route::has('register'))
+                        <!-- @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
+                        @endif -->
                         <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-primary">Log in</button>
                             <a href="{{ route('password.request') }}" class="text-gray-600">Forgot Password?</a>
