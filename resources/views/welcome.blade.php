@@ -29,7 +29,7 @@
                         <div class="login-header mb-3">
                             <div class="brand">
                                 <div class="d-flex align-items-center navbar-brand">
-                                    <img src="{{ asset('storage/images/SCES-rb.png') }}" height="95px" alt="Strath Logo"/>
+                                    <img src="{{ asset('storage/images/studentaffairslogo.png') }}" height="95px" alt="Strath Logo"/>
                                 </div>
                             </div>
                         </div>
@@ -55,11 +55,6 @@
                         <div class="form-check mb-3">
                             <div class="row">
                                 <div class="col-6">
-                                    <!-- <input class="form-check-input" type="checkbox" value="1" name="remember"
-                                        id="remember" />
-                                    <label class="form-check-label text-white" for="remember">
-                                        Remember Me
-                                    </label> -->
                                 </div>
                                 <div class="col-6 text-end">
                                     <label class="form-check-label text-white" for="remember">
@@ -74,6 +69,10 @@
                                 class="btn d-block h-45px w-100 btn-lg fs-14px">Log
                                 in <i class="fa fa-sign-in-alt"></i> </button>
                         </div>
+                        
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                        @endif
                         <!-- <div class="mb-3 d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-primary">Log in</button>
                             <a href="{{ route('password.request') }}" class="text-gray-600">Forgot Password?</a>

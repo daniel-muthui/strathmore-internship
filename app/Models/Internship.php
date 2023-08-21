@@ -18,6 +18,7 @@ class Internship extends Model
         'start_date',
         'end_date',
         'location',
+        'category',
         'application_deadline',
         'image_url'
     ];

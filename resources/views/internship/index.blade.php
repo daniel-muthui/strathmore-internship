@@ -3,17 +3,38 @@
             {{ __('Dashboard') }}
         </h2>
 </x-slot>
+
     <x-app-layout>
     
     <style>
-        .card-img-top{
-            width: 50px;
-            height: 100px;
-        }
-        .comp-form input:disabled{
-            background: transparent;
-        }
-    </style>
+.card {
+    display: block; 
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
+    transition: box-shadow .25s; 
+}
+.card:hover {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.img-card {
+  width: 10%;
+  height:10px;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+  display:block;
+  overflow: hidden;
+}
+.img-card img{
+  width: 5%;
+  height: 5px;
+  object-fit:cover; 
+  transition: all .25s ease;
+}
+</style>
+
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,12 +53,11 @@
         {{Session('fail')}}
     </div>
     @endif
-
     <div class="row">
         @foreach($company as $comp)
         <div class="col-md-4 mb-4">
             <div class="card">
-                <img src="{{asset('storage/images/'.$comp->image_url) }}"  class="card-img-top" alt="Company Logo"> <!-- Add image here -->
+            <img src="{{asset('storage/images/'.$comp->image_url) }}" class="card-img-top img-medium" alt="Company Logo">
                 <div class="card-body">
                     
                     <div class='comp-form d-flex flex-column gap-3'>
@@ -68,6 +88,10 @@
                         <div class='d-flex gap-2'>
                             <label for='comp_loc'>Location: </label>
                             <input type='text' id='comp_loc' class='form-control border-0' disabled data-name='location' value="{{$comp->location}}"/>
+                        </div>
+                        <div class='d-flex gap-2'>
+                            <label for='comp_cat'>Category: </label>
+                            <input type='text' id='comp_cat' class='form-control border-0' disabled data-name='category' value="{{$comp->category}}"/>
                         </div>
                         <div class='d-flex gap-2'>
                             <label for='comp_app'>Application Deadline: </label>

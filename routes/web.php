@@ -34,7 +34,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function(){
     Route::get('/dashboard/internship/delete/{id}', [InternshipController::class, 'DeleteAction'])->name('internship.delete');
     Route::get('/dashboard/internship/create', [InternshipController::class, 'create'])->name('internship.create');
     Route::post('/dashboard/internship', [InternshipController::class, 'store'])->name('internship.store');
+    Route::get('/fetch-description', [InternshipController::class, 'fetchDescription']);
+    Route::get('/internships', [InternshipController::class, 'index'])->name('internships.index');
+  
+    
 });
+
+
 
 
 

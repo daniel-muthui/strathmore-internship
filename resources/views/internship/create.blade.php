@@ -7,12 +7,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <x-app-layout>
-
-    <!-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"''>
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot> -->
+<div class="mb-3">
+</div>
+<!-- <div class="hidden sm:flex sm:items-center sm:ml-6">
+    <a href="{{ route('internship.index') }}" class="btn btn-secondary">Back</a>
+</div> -->
+  
 
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -23,7 +23,8 @@
                             @csrf
                             <div class="form-group">
                             <label for="image">Company Logo:</label>
-                            <input type="file" class="form-control" id="image" name="image">
+                            <input type="file" name="image" id="image" class="form-control border-0" accept="image/*">
+                            <!-- <input type="file" class="form-control" id="image" name="image"> -->
                             <span style="color: red">@error('image') {{ $message }} @enderror</span>
                             </div>
                             <div class="form-group">
@@ -67,10 +68,24 @@
                                 <span style='color:red'>@error('location') {{$message}} @enderror</span>
                             </div>
                             <div class="form-group">
+                            <select class="form-control" id="category" name="category">
+                            <option value="Technology" {{old("category") == 'Technology'? 'selected' : null}}>Technology</option>
+                            <option value="Engineering" {{old("category") == 'Engineering'? 'selected' : null}}>Engineering</option>
+                            <option value="Business" {{old("category") == 'Business'? 'selected' : null}}>Business</option>
+                            <option value="Law" {{old("category") == 'Law'? 'selected' : null}}>Law</option>
+                            </select>
+                            <span style='color:red'>@error('job_type') {{$message}} @enderror</span>
+                            </div>
+                            <div class="form-group">
                                 <label for="application_deadline">Application Deadline:</label>
                                 <input type="date" class="form-control" id="application_deadline" value='{{old("application_deadline")}}' name="application_deadline">
                                 <span style='color:red'>@error('application_deadline') {{$message}} @enderror</span>
                             </div>
+                            <style>
+                                .btn{
+                                    background-color:blue;
+                                }
+                            </style>
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>
                     </div>

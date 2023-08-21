@@ -11,10 +11,25 @@ use File;
 
 class InternshipController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Internship::all();
-        return view('internship.index', ['company' => $companies]);
+        $category = $request->query('category');
+
+        $query = Internship::query();
+
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        $companies = $query->get();
+
+        return view('internship.index', [
+            'companies' => $companies,
+            'category' => $category,
+        ]);
+
+        // $companies = Internship::all();
+        // return view('internship.index', ['company' => $companies]);
     }
 
     public function create()
@@ -44,18 +59,18 @@ class InternshipController extends Controller
         return back()->with('fail', 'Modification failed');
     }
 
-    public $FILE_NAME = "avatar.jpg";
+    public function FileUpload(Request $request, $inputName, $fieldname = 'file', $path = 'Images/')
+    {
+        $file = ($path != 'Images/') ? $request->file($inputName) : $request->file('file_data')[$inputName];
 
-    public function FileUpload(Request $request, $inputName, $fieldname='file', $path=''){
-        $file = ($path != 'Images/')?$request->file($inputName):$request->file('file_data')[$inputName];
+        // Generate a unique filename using user ID and timestamp
+        $fileRename = ($path != 'Images/') ? $request->user()->id . '_' . $fieldname . '_' . time() . '.' . $file->extension() : $fieldname . '_' . time() . '.' . $file->extension();
 
-        $fileRename = ($path != 'Images/')?$request->user()->id.'_'.$fieldname.'.'.$file->extension(): $fieldname.'.'.$file->extension();
-
-        $filGet = public_path('Storage/'.$path.$fileRename);
-        if(File::exists($filGet)){
-            File::delete($filGet);
+        $fileGet = public_path('Storage/' . $path . $fileRename);
+        if (File::exists($fileGet)) {
+            File::delete($fileGet);
         }
-        $file->move('storage/'.$path,$fileRename);
+        $file->move('storage/' . $path, $fileRename);
 
         return $fileRename;
     }
@@ -69,27 +84,16 @@ class InternshipController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'location' => 'required|string',
+            'category' => 'required|string',
             'application_deadline' => 'required|date',
             'image_url' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
-
+    
         $Intern = new Internship();
     
-         // Initialize imageUrl variable
-        // $img =[];
-        // if ($request->hasFile('image_url')) {
-        //     $image = $request->file('image_url');
-        //     $imagePath = public_path('/images');
-        //     $imageName = time() . '_' . $image->getClientOriginalName();
+        // Generate a unique image filename
+        $imageFileName = $this->FileUpload($request, 'image', 'companyLogofile', $path = 'images');
     
-        //     // Store the uploaded image in the defined path
-        //     $image->move($imagePath, $imageName);
-        //     // $this-save();
-        //     // $image->storeAs($imagePath, $imageName, 'public');
-        //     // Intern->image_url = $imageName;
-        // }
-        
-        $this->FILE_NAME = $this->FileUpload($request, 'image', 'companyLogofile', $path='images');
         $data = [
             'company_name' => $request->company_name,
             'position' => $request->position,
@@ -98,13 +102,26 @@ class InternshipController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'location' => $request->location,
+            'category' => $request->category,
             'application_deadline' => $request->application_deadline,
-            'image_url' => $this->FILE_NAME,
+            'image_url' => $imageFileName,
         ];
+    
+        $Intern->create($data);
+    
+        return redirect()->route('internship.index')
+            ->with('success', 'Internship created successfully.');
+    
+    
         
-        if (Internship::create($data)) {
-            return redirect()->route('internship.index');
-        }
+        // if (Internship::create($data)) {
+        //     return redirect()->route('internship.index');
+        // }
+    }
+        public function fetchDescription(Request $request)
+    {
+        $description = ''; // Fetch the description data from the database based on your model
+        return response()->json(['required_skills' => $description]);
     }
 }
 

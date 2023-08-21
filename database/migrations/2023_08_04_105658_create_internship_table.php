@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('application_deadline');
             $table->string('image_url')->nullable();
             $table->timestamps();
+            $table->enum('category',['Technology', 'Business', 'Law','Engineering']);
         });
     }
 

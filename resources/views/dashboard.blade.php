@@ -6,32 +6,28 @@
 <x-app-layout>
     
 <style>
-.card {
-    display: block; 
-    margin-bottom: 20px;
-    line-height: 1.42857143;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
-    transition: box-shadow .25s; 
-}
-.card:hover {
-  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-}
-.img-card {
-  width: 10%;
-  height:10px;
-  border-top-left-radius:2px;
-  border-top-right-radius:2px;
-  display:block;
-  overflow: hidden;
-}
-.img-card img{
-  width: 5%;
-  height: 5px;
-  object-fit:cover; 
-  transition: all .25s ease;
-}
+    .card-img-container {
+        position: relative;
+        overflow: hidden;
+        padding-top: 75%; 4:3 aspect ratio
+    }
+
+    .card-img-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+    .application-deadline {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 4px;
+    }
+    .read-more-link {
+        color: #007bff;
+        cursor: pointer;
+    }
 </style>
 
 
@@ -56,55 +52,55 @@
             {{Session('fail')}}
         </div>
         @endif
-   
+
+        @if(Auth::user()->isAdmin())
+        <div class="container mb-3">
+            <a href="{{ route('internship.create') }}" class="btn btn-primary"><i class="fas fa-plus me-2"></i>Create New Internship</a>
+        </div>
+        @endif
     
     @livewire('livewire-ui-modal')
     @livewireScripts
+ 
+<div class="category-buttons mb-3">
+    <a href="{{ route('internship.index') }}" class="btn btn-primary">All</a>
+    <a href="{{ route('internship.index', ['category' => 'Technology']) }}" class="btn btn-primary">Technology</a>
+    <a href="{{ route('internship.index', ['category' => 'Engineering']) }}" class="btn btn-primary">Engineering</a>
+    <a href="{{ route('internship.index', ['category' => 'Business']) }}" class="btn btn-primary">Business</a>
+    <a href="{{ route('internship.index', ['category' => 'Law']) }}" class="btn btn-primary">Law</a>
+</div>
     <div class="row">
         @foreach($company as $comp)
         <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{{asset('storage/images/'.$comp->image_url) }}"  class="card-img-top" alt="Company Logo"> <!-- Add image here -->
-                <div class="card-body">
-                    <div class='comp-form d-flex flex-column gap-3'>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_nm'>Company Name:</label>
-                            <input type='text' id='comp_nm' class='form-control border-0' disabled data-name='company_name' value="{{$comp->company_name}}"/>
-                        </div>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_pos'>Position: </label>
-                            <input type='text' id='comp_pos' class='form-control border-0' disabled data-name='position' value="{{$comp->position}}"/>
-                        </div>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_job'>Job type: </label>
-                            <input type='text' id='comp_job' class='form-control border-0' disabled data-name='job_type' value="{{$comp->job_type}}"/>
-                        </div>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_des'>Description: </label>
-                            <input type='text' id='comp_des' class='form-control ' disabled data-name='description' value="{{$comp->description}}"/>
-                        </div>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_loc'>Location: </label>
-                            <input type='text' id='comp_loc' class='form-control border-0' disabled data-name='location' value="{{$comp->location}}"/>
-                        </div>
-                        <div class='d-flex gap-2'>
-                            <label for='comp_app'>Application Deadline: </label>
-                            <input type='date' id='comp_app' class='form-control border-0' disabled data-name='application_deadline' value="{{$comp->application_deadline}}"/>
-                        </div>
-                        <div class="small d-flex justify-content-start">
-                            <a href="#!" class="d-flex align-items-center me-3">
-                                <i class="far fa-thumbs-up me-2"></i>
-                                <p class="mb-0">Like</p>
-                            </a>
-                            <a href="#!" class="d-flex align-items-center me-3">
-                                <i class="fas fa-share me-2"></i>
-                                <p class="mb-0">Share</p>
-                            </a>
-                        </div>
-                        <button type="button" onclick="Livewire.emit('openModal', 'reviewmodal')" class="btn btn-success"><i class="fa fa-check"></i> Apply</button>
-                        <button type="button" class="btn btn-info ml-2"><i class="fa fa-check"></i> Leave Review</button>
-                    </div>
+            <div class="card shadow-sm">
+                <div class="card-img-container">
+                    <img src="{{asset('storage/images/'.$comp->image_url) }}" class="card-img-top" alt="Company Logo">
                 </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{$comp->company_name}}</h5>
+                        <p class="card-text"><strong>Position:</strong> {{$comp->position}}</p>
+                        <p class="card-text"><strong>Job Type:</strong> {{$comp->job_type}}</p>
+                        <p class="card-text"><strong>Location:</strong> {{$comp->location}}</p>
+                        
+                        <!-- Collapsible Description -->
+                        <livewire:read-more-component :description="$comp->description" />
+                        <div class="mb-3">
+                        </div>    
+                        <!-- Application Deadline -->
+                        <p class="card-text application-deadline">
+                            <strong>Application Deadline:</strong>
+                            <span>{{$comp->application_deadline}}</span>
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <button type="button" class="btn btn-primary"><i class="far fa-thumbs-up me-2"></i> Like</button>
+                            <button type="button" class="btn btn-secondary"><i class="fas fa-share me-2"></i> Share</button>
+                        </div>
+                        <div class="d-grid gap-2">
+                                <button type="button" onclick="Livewire.emit('openModal', 'reviewmodal')" class="btn btn-success btn-equal-size"><i class="fa fa-check me-2"></i> Apply</button>
+                                <button type="button" class="btn btn-primary btn-equal-size"><i class="fa fa-star me-2"></i> Leave Review</button>
+                        </div>
+                    </div>
             </div>
         </div>
         @endforeach
